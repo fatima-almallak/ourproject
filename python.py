@@ -17,7 +17,8 @@ import speech_recognition as sr
 import pymysql
 import mysql.connector
 connection = pymysql.connect(
-host="localhost",user="root",password="123456",database="mydb")
+host="localhost",user="root",password="123456",database="mydb")   
+
 cursor = connection.cursor()
 connection.autocommit(True)
 
