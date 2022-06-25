@@ -70,12 +70,12 @@
               <li>
                 <form  action="{{ url_for('afterlogin') }}" method="POST">
                   <input style="display: none" type="text" name="number" value="{{v}}" id="number" >
-                  <button type="submit" class="gh">رجوع</button><i class="fa fa-backward"></i>
+                  <button type="submit" class="gh">رجوع</button><i class="jk fa fa-backward"></i>
                   </form></li>
 
-                <li><a href="{{ url_for('login') }}">تسجيل الخروج</a><i class="fa fa-sign-out" ></i></li>
+                <li><a href="{{ url_for('login') }}">تسجيل الخروج</a><i class="jk fa fa-sign-out" ></i></li>
                
-                <li><a href="{{ url_for('home') }}">الصفحة الرئيسية</a><i class="fa fa-home" ></i></li>
+                <li><a href="{{ url_for('home') }}">الصفحة الرئيسية</a><i class="jk fa fa-home" ></i></li>
             </ul>
         </div>
 
@@ -101,7 +101,7 @@
             <input  class="iinn" type="password" id="passOne" name="psw" placeholder="كلمة السر الجديدة"
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
-            <br><br><br>
+            <br><br>
             <input class="iinn" type="password" placeholder="تأكيد كلمة السر" id="passTwo"/>
           </div>
           <div id="footer" class="incorrect">
@@ -111,13 +111,13 @@
   
   
   
-  <div id="msg">
+  <!-- <div id="msg">
     <h3>:يجب أن تحتوي كلمة السر على</h3>
     <p id="letter" class="invalid">حرف صغير</p>
     <p id="capital" class="invalid">حرف كبير</p>
     <p id="number" class="invalid">رقم</p>
     <p id="length" class="invalid">لا يقل عن 8 حدود</p>
-  </div>
+  </div> -->
                   
   <script>
   var myInput = document.getElementById("passOne");

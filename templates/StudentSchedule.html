@@ -9,22 +9,22 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
-   
+    
 </head>
 <body>
   <section class="header">
     <nav>
-        <div class="nav-links1" id="navLinks">
+        <div class="nav-links3" id="navLinks">
             <ul>
               <li>
                 <form  action="{{ url_for('afterlogin') }}" method="POST">
                   <input style="display: none" type="text" name="number" value="{{v2}}" id="number" >
-                  <button type="submit" class="ghs">رجوع</button><i class="fa fa-backward"></i>
+                  <button type="submit" class="ghs">رجوع</button><i class="jk fa fa-backward"></i>
                   </form></li>
 
-                <li><a href="{{ url_for('login') }}">تسجيل الخروج</a><i class="fa fa-sign-out" ></i></li>
+                <li><a href="{{ url_for('login') }}">تسجيل الخروج</a><i class="jk fa fa-sign-out" ></i></li>
                
-                <li><a href="{{ url_for('home') }}">الصفحة الرئيسية</a><i class="fa fa-home" ></i></li>
+                <li><a href="{{ url_for('home') }}">الصفحة الرئيسية</a><i class="jk fa fa-home" ></i></li>
             </ul>
         </div>
 
@@ -34,34 +34,34 @@
       <div class="sidebar1">
         <br><br>
 
-<h1>جدول الطالب</h1>
+<h1 class="h1">جدول الطالب</h1>
 <br><br>
   
     <table class="table1" >
       <thead>
-        <th >رمز المقرر</th>
-        <th >اسم المقرر</th>
-     
-        <th>عدد الساعات المعتمدة</th>
-        <th>الشعبة</th>
-        <th>الوقت</th>
-        <th>المحاضر</th>
-        <th>القاعة</th>
+       
         <th>المبنى</th>
+        <th>القاعة</th>
+        <th>المحاضر</th>
+        <th>الوقت</th> 
+        <th>الشعبة</th>
+        <th>عدد الساعات المعتمدة</th>
+        <th >اسم المقرر</th>
+        <th >رمز المقرر</th>
         </thead></tr>
        
         <tbody>
 
           {% for row in value %}                         
           <tr>
-           <td>{{row[7]}}</td>
-           <td>{{row[6]}}</td>
-           <td>{{row[5]}}</td>
-           <td>{{row[4]}}</td>
-           <td>{{row[3]}}</td>
-           <td>{{row[2]}}</td>
-           <td>{{row[1]}}</td>
            <td>{{row[0]}}</td>
+           <td>{{row[1]}}</td>
+           <td>{{row[2]}}</td>
+           <td>{{row[3]}}</td>
+           <td>{{row[4]}}</td>
+           <td>{{row[5]}}</td>
+           <td>{{row[6]}}</td>
+           <td>{{row[7]}}</td>
          
            </tr>
            {% endfor %}
@@ -96,6 +96,18 @@
        
          annyang.debug();
         annyang.start({ autoRestart: true, continuous: true });
+
+
+      
+
+
+
+
+
+
+
+
+
 </script>
   
 

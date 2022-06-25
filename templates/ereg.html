@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />       
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+        <title>adminafter</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+    </head>
+    <body>
+      <section class="headerinfo">
+        <nav>
+            <!-- <a href="index.html"><img src="images/Logo.jpg"></a> -->
+            <div class="nav-links3" id="navLinks">
+                <ul>
+                  <li>
+                    <form  action="{{ url_for('afterlogin') }}" method="POST">
+                      <input style="display: none" type="text" name="number" value="{{v2}}" id="number" >
+                      <button type="submit" class="gh">رجوع</button><i class="jk fa fa-backward"></i>
+                      </form></li>
+
+                    <li><a href="{{ url_for('login') }}">تسجيل الخروج</a><i class="jk fa fa-sign-out"></i></li>
+                   
+                    <li><a href="{{ url_for('home') }}">الصفحة الرئيسية</a><i class="jk fa fa-home"></i></li>
+                </ul>
+            </div>
+
+            
+        </nav>
+
+      <input type="text"  style="display: none" value="{{std_id}}" id="id015">
+      <br><br><br>
+            <div  class="container" id="cat">
+                
+                <table id="myTableq" class="table111">
+                  <tr >
+                   
+                    <th style="width:20%;">الرقم  </th> 
+                      <th style="width:20%;">رقم المادة   </th>
+                      <th style="width:20%;">رقم الشعبة  </th> 
+                      <th style="width:20%;">عدد الساعات  </th>
+                      <!-- <th style="width:20%;"><button id="delete>حذف</button></th> -->
+                      <th style="width:20%;">حذف</th>
+            
+                </tr>
+            
+         
+                </table>
+            
+                </div>
+              </center>
+                   <br><br>
+              <center> <div  class="container" id="dog">
+                <!-- <input class="addsec" id='cell1' placeholder="عدد الطلاب" type="text"/> -->
+                <input class="addsec" id='cell2' placeholder="رقم المادة" type="text"/>
+                <input class="addsec" id='cell3' placeholder="رقم الشعبة" type="text"/>
+                <input class="addsec" id='cell4' placeholder="عدد الساعات" type="text"/>
+                <input class="addsec" id='cell5' placeholder="السجل المالي" type="text"/>
+               
+                <br><br>
+                <button class="addsectionn" onclick="insRow()">اضافة</button>
+                <button class="addsectionn" onclick="submitt()">تاكيد الجدول</button>
+                
+                </div></center>
+                
+                    
+                  
+             
+                
+                <script> 
+
+                  $(document).ready(function(){
+
+                    $.ajax({
+                      url:"{{url_for('temporary_ajax')}}",
+                      type:'POST',
+                      data: {'std_id': std_id},
+                      
+                      success:function(response){
+                        for(var i=0;i<response.length;++i){
+                        
+                        
+                         
+                          y.innerHTML=(i);
+                          z.innerHTML=response[i];
+                          p.innerHTML=response[i];
+                          g.innerHTML=response[i];
+
+                        }
+                        
+                      
+                      
+                       
+                        var a = document.getElementById("myTableq");
+                        var rows = a.rows.length; 
+       
+                       
+                        y.innerHTML=(rows-1);
+                        z.innerHTML=course_id;
+                        p.innerHTML=s_id;
+                        g.innerHTML=numhours;
+                      },
+                      error: function (error) {
+                        console.log(error);
+                        },
+                    });
+                   });
+                   
+
+                  var s_id = document.getElementById("cell3").value;
+                  var course_id = document.getElementById("cell2").value;
+                  var numhours = document.getElementById("cell4").value;
+                  var total = 0;
+
+                  var std_id = document.getElementById("id015").value;//from jinja std_id
+
+                  function insRow()
+                {
+
+                 
+                  var s_id = document.getElementById("cell3").value;
+                  var course_id = document.getElementById("cell2").value;
+                  var numhours = parseInt( document.getElementById("cell4").value);
+
+                  var h1 = 0;
+                   h1 = parseInt (numhours) +parseInt(total);
+                   console.log(total)
+                   console.log(h1)
+                  if (h1<=21){
+                    
+                 
+                 console.log(total)
+                 console.log(std_id)
+                 console.log(course_id)
+                 console.log(s_id)
+
+
+
+                   $.ajax({
+                    url: "{{ url_for('temp_ajax') }}",
+                    data: {
+                      'std_id': std_id,
+                       'course_id' : course_id,
+                       's_id': s_id,
+                    },
+                    type: "POST",
+                    success: function (response) {
+                    
+
+                      if (response ==  "اكتملت العملية بنجاح"){
+                        total = numhours + total
+                        var x=document.getElementById('myTableq').insertRow(document.getElementById('myTableq').rows.length);
+                        var y= x.insertCell(0);
+                        var z= x.insertCell(1);
+                        var p= x.insertCell(2);
+                        var g= x.insertCell(3);
+                      
+                       
+                        var a = document.getElementById("myTableq");
+                        var rows = a.rows.length; 
+       
+                       
+                        y.innerHTML=(rows-1);
+                        z.innerHTML=course_id;
+                        p.innerHTML=s_id;
+                        g.innerHTML=numhours;
+                      }
+                       else if (  "هذا المساق يتعارض مع مساق اخر في نفس الوقت")
+                       {
+                        alert(" هذا المساق يتعارض مع مساق اخر في نفس الوقت")
+                       }
+                       else{
+
+                        alert(  "انت بالفعل ملتحق بشعبة من هذا المساق يجب عليك حذف المساق ثم اعادة الالتحاق بشعبة اخرى")
+                       }
+                    },
+          
+                    error: function (error) {
+                     console.log(error);
+                     },
+                  });
+
+                
+                 
+
+                
+                 }
+                 else{
+                  alert("تجاوزت العدد المسموح به من الساعات")
+                 }
+                 document.getElementById("cell2").value = "";
+                 document.getElementById("cell3").value = ""; 
+                 document.getElementById("cell4").value = "";
+                 var fr = 0 ;
+                 fr = total *24;
+                 document.getElementById("cell5").value = fr;
+
+                }
+
+
+
+
+                function deleteRow(r) {
+                  var i = r.parentNode.parentNode.rowIndex;
+                  document.getElementById("myTable").deleteRow(i);
+                }
+                
+
+                function submitt(){
+
+
+                 
+                  $.ajax({
+                    url: "{{ url_for('confirm_ajax') }}",
+                    data: {'std_id': std_id,
+                    },
+                    type: "POST",
+                    success: function (response) {
+                      console.log(response)
+                    },
+          
+                    error: function (error) {
+                     console.log(error);
+                     },
+                  });
+
+                }
+
+
+                if(annyang) {
+                  var commands = {
+                   'تسجيل الخروج':function(){     
+                     document.getElementsByTagName("a")[1].click();
+  
+
+                   },
+                  }
+                };
+                 
+                
+                 
+                  </script>
+                  
+                  </body>
+                  </html>

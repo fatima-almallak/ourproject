@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />       
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>adminafter</title>
+        <link rel="stylesheet" href="heba.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">   
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    </head>
+    <body>
+      <input type="text"  style="display: none" value="{{std_id}}" id="id015">
+            <div  class="container" id="cat">
+                
+                <table id="myTableq" class="table111">
+                  <tr >
+                   
+                    <th style="width:20%;">count  </th> 
+                      <th style="width:20%;">c_id   </th>
+                      <th style="width:20%;">s_id  </th> 
+
+                 
+            
+            
+                     
+            
+                </tr>
+            
+                <!-- <tr>
+                  <td>cell 1</td>
+                  <td>cell 2</td>
+                  <td>cell 2</td> -->
+
+                
+                  <!-- <td><i onclick="deleteRow(this)" class="fa fa-trash cc "></i></td> 
+                  <td><i onclick="addstd()" class="fa fa-user-plus ccccc "></i></td> -->
+                  <!-- <td><i onclick="showadd()"  class="fa fa-plus ccc "></i></td>  -->
+                  <!-- <td><i  class="fa fa-pencil cccc "></i></td>  -->
+                  <!-- <td><i  class="fa fa-backward ccccc "></i></td>  -->
+                <!-- </tr>
+                <tr>
+                  <td>cell 1</td>
+                  <td>cell 2</td>
+                  <td>cell 2</td> -->
+
+                 
+                  <!-- <td><i onclick="deleteRow(this)" class="fya fa-trash cc "></i></td> 
+                  <td><i onclick="addstd()" class="fa fa-user-plus ccccc "></i></td> -->
+            
+                  <!-- <td><i onclick="showIt()"  class="fa fa-plus ccc "></i></td>  -->
+                  <!-- <td><i  class="fa fa-pencil cccc "></i></td> -->
+                  <!-- <td><i  class="fa fa-backward ccccc "></i></td>   -->
+                <!-- </tr> -->
+         
+                </table>
+            
+                </div>
+              </center>
+
+              <center> <div  class="container" id="dog">
+                <!-- <input class="addsec" id='cell1' placeholder="عدد الطلاب" type="text"/> -->
+                <input class="addsec" id='cell2' placeholder="c_id" type="text"/>
+                <input class="addsec" id='cell3' placeholder="s_id" type="text"/>
+               
+                <br><br>
+                <button class="addsectionn" onclick="insRow()">اضافة</button>
+                
+                </div></center>
+                
+                    
+                  
+             
+                
+                <script>
+
+                  //var std_id = document.getElementById()//from jinja std_id
+                  var s_id = document.getElementById("cell3")
+                  var course_id = document.getElementById("cell2")
+                  count = 0;
+
+
+                  function insRow()
+                {
+                var x=document.getElementById('myTableq').insertRow(document.getElementById('myTableq').rows.length);
+                var y= x.insertCell(0);
+                var z= x.insertCell(1);
+                var p= x.insertCell(2);
+                // var e= x.insertCell(3);
+                // var f= x.insertCell(4);
+                // var g= x.insertCell(5);
+                // var k= x.insertCell(6);
+                
+                
+                
+                y.innerHTML=count;
+                z.innerHTML=document.getElementById("cell2").value;
+                p.innerHTML=document.getElementById("cell3").value;
+                count++;
+                // e.innerHTML=document.getElementById("cell4").value;
+                // f.innerHTML=document.getElementById("cell5").value;
+                // g.innerHTML='<i class="fa fa-trash cc " onclick="deleteRow(this)"></i>';
+                // k.innerHTML='<i class="fa fa-user-plus ccccc " onclick="addstd()"></i>';
+                
+                // g.innerHTML='<input type="button" value="Delete" onclick="deleteRow(this)"/>';
+                }
+                 
+                
+                  
+                 
+                  </script>
+                  
+                  </body>
+                  </html>

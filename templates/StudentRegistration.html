@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
 
   <meta name="viewport" content="width = device-width, initial-scale=1.0">
    </head>
@@ -21,10 +22,10 @@
           <li>
           <form  action="{{ url_for('afterlogin') }}" method="POST">
             <input style="display: none" type="text" name="number" value="{{v2}}" id="number" >
-            <button type="submit" class="gh">رجوع</button><i class="fa fa-backward"></i>
+            <button type="submit" class="gh">رجوع</button><i class="jk fa fa-backward"></i>
             </form></li>
-          <li><a href="{{ url_for('login') }}"class="b" >تسجيل الخروج</a><i class="fa fa-sign-out" ></i></li>
-           <li><a href="{{ url_for('home') }}" class="b">الصفحة الرئيسية</a><i class="fa fa-home" ></i></li>
+          <li><a href="{{ url_for('login') }}"class="b" >تسجيل الخروج</a><i class="jk fa fa-sign-out" ></i></li>
+           <li><a href="{{ url_for('home') }}" class="b">الصفحة الرئيسية</a><i class="jk fa fa-home" ></i></li>
           
        </ul>
          </div>
@@ -52,6 +53,8 @@
   
          </table>
          <input type="text" id="sum_of_hours">
+
+         <center><button id="okdel" >hiii</button></center>
         </div>
          <br>
           
@@ -72,7 +75,7 @@
          <th style="width:22%;">اسم المساق </th>
          <th style="width:22%;">عدد الساعات </th>
          <th style="width:22%;">نوع المساق </th>
-         <th style="width:12%;">الشعب  </th>
+         <th style="width:12%;" >الشعب  </th>
       
          </tr>
   
@@ -113,19 +116,23 @@
                <tr>
                          
                               
-                              <th style="width:20%;">الحالة   </th>
-                              <th style="width:20%;">المدرس  </th> 
-                              <th style="width:20%;">الوقت  </th>
-                              <th style="width:20%;">القاعة  </th>
-                              <th style="width:20%;" > شعبة </th>
-                              <th style="width:20%;" > اختيار</th>
+                              <th style="width:18%;">الحالة   </th>
+                              <th style="width:18%;">المدرس  </th> 
+                              <th style="width:18%;">الوقت  </th>
+                              <th style="width:18%;">القاعة  </th>
+                              <th style="width:18%;" > شعبة </th>
+                              <th style="width:10%;" > اختيار</th>
                </tr>
               
                <center></ceter><p><b class="pp">يرجى اختيار الشعبة المراد تسجيلها   </b></p></center>
                
                          <input style="display:none ;" type="text" id="test">
                    <tbody id="tBody"> </tbody>
+                   
                </table>
+               <br><br>
+               <!-- هاي الاوك عشان ياكد الطالب ع اضافة مادة -->
+               <center><button id="ok">ok</button></center>
                 <!-- <button class="btn2"> <b>+ اختيار الشعبة </b> </button> -->
              </div>
          
@@ -138,9 +145,25 @@
   <script>
   
    var course_id;
+   var s_id;
+   var std_id = document.getElementById("id015").value;
+   var res;
    
    
+   window.onload = function () {
+
+    $.ajax({
+      url: "{{ url_for('speak_ajax') }}",
+     // data: { name: "هْلاً بِكَ في صَفْحَةِ التَسجيلِ: إذا أرَدْتَ المُساعَدَةَ الصَوْتِيَّةَ قُلْ: مُساعَدَةْ" },
+      type: "POST",
+      //success: function (response) {},
+
+      //error: function (error) {
+      // console.log(error);
+      // },
+    });
    
+  };
     
     function closeDiv(){
       document.getElementById('id03').style.display='none';
@@ -148,7 +171,11 @@
      myFunction1() ;
   
     }
-    function ff(variable) {
+
+
+//هاد الفنكشن بشوف اذا رقم الشعبة اللي دخلها الطالب موجود واذا موجود برجعها ب s_id
+//بعدها اذا كبس اوك بدو يسجل ممكن صح او يكون في تعارض
+    function addsection(variable) {
       // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       
@@ -165,9 +192,22 @@
           
           console.log(i)
           
+          
           if (txtValue==variable) {
-            
-            document.getElementsByClassName("h")[i-1].click();
+            s_id = variable;
+            if(okhelp === true){
+            $.ajax({
+              url: "{{ url_for('speak_ajax') }}",
+              data: { name: "لِتَأكيدِ اختيارِ الشُعْبَةِ قُلْ تَأكيدْ" },
+              type: "POST",
+              //success: function (response) {},
+      
+              //error: function (error) {
+              // console.log(error);
+              // },
+            });}
+            break;
+            //document.getElementsByID("ok").click();
           } else {
             
           }
@@ -175,13 +215,17 @@
     
        }
     }
-    function ff2(variable) {
+
+
+
+    function deletesection(variable) {
       // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       
       
       table = document.getElementById("registration_table");
       tr = table.getElementsByTagName("tr");
+
     
       // Loop through all table rows, and hide those who don't match the search query
       for (i = 0; i < tr.length; i++) {
@@ -189,12 +233,28 @@
       
         if (td) {
           txtValue = td.textContent || td.innerText;
-          console.log(i)
+          //console.log(i)
           if (txtValue==variable) {
-            console.log("ggggggg")
-            console.log(i)
-            console.log(variable);
-            document.getElementsByClassName("w")[i-2].click();
+            //console.log("ggggggg").
+            //console.log(i)
+            //console.log(variable);
+            s_id = tr[i].getElementsByTagName("td")[2].textContent;
+            course_id=tr[i].getElementsByTagName("td")[5].textContent;
+            console.log(course_id);
+          
+            if(okhelp === true){
+            $.ajax({
+              url: "{{ url_for('speak_ajax') }}",
+              data: { name: "لِتَأكيدِ حَذْفْ المَساقْ قُلْ: تَأكيدْ " },
+              type: "POST",
+              //success: function (response) {},
+      
+              //error: function (error) {
+              // console.log(error);
+              // },
+            });}
+                break;
+            //document.getElementsByClassName("w")[i-2].click();
           }else{
 
           }
@@ -275,91 +335,38 @@
     }
   
   
-  
+  //كبس الطالب على اختيار شعبة معينة لاختيارها وبخزن قيمة رقم الشعبة
       document.getElementById("myTable").addEventListener("click", function(evt) {
   
         var btn = evt.target;
         if(btn.tagName==="BUTTON"){
         var row = btn.parentNode.parentNode; 
         var cells = row.getElementsByTagName("td"); 
-        console.log(cells[4].textContent);
+        console.log(cells[4].textContent);//بترجع السيكشن
         console.log(course_id);
-        var std_id = document.getElementById("id015").value;
+        //var std_id = document.getElementById("id015").value;
         
-        var s_id=cells[4].textContent;
-        if (confirm("هل انت متأكد؟")) {
-          
-       // var sec_time = cells[2].textContent;
-  
-        $.ajax({
-          url: "{{ url_for('registration_ajax') }}",
-          data: {'cl' : course_id , 'sl' : s_id , 'std_id' : std_id},
-          type: 'POST',
-          success: function(response) {
-           document.getElementsByClassName("close")[0].click();
-           document.getElementById('myInput1').value="";
-           myFunction1();
-  
-          
-  
-              var trHTML = '';
-              $('#registration_body').html(trHTML);
-              //console.log((response[1][1]).time)
-              
-              
-             // $.each(response[1], function (i) {
-                //console.log((response[1][i]))
-                for (var i = 0; i < response[1].length; ++i){
-                  trHTML +=
-                  '<tr><td>'
-                  +' <button class="w"style="width:100%"><i class="fa fa-download"></i></button>'
-                  + '</td><td>'
-                  + (response[1][i]).time
-                  + '</td><td>'
-                  + (response[1][i]).s_id
-                  + '</td><td>'
-                  + (response[1][i]).nh
-                  + '</td><td>'
-                  + (response[1][i]).cn
-                  + '</td ><td>'
-                  + (response[1][i]).c_id
-                  + '</td></tr>';
-    
-                //i++;
-             // });
-                  }
-                $('#registration_body').append(trHTML);
-                document.getElementById('reg').style.display='block';
-   // }
-  
-  //نهاية الif 
-           
-           //console.log(response[0]);
-           //console.log(response[1]);
-  
-  
-           document.getElementById("t1").value=response;
-           document.getElementById("divv").style.display="block";
-  
-          },
-          
-          error: function(error) {
-          console.log(error);
-          }
-          });
-          }///////
-        
-        
-        
-        } else {
-          txt = "You pressed Cancel!";
+         s_id=cells[4].textContent;
         }
-      
-        
+        //delete above }
+
+      //put the rest of code here
+      if(okhelp === true){
+      $.ajax({
+        url: "{{ url_for('speak_ajax') }}",
+        data: { name: "لِتَأكيدِ اختيارِ الشُعْبَةِ قُلْ تَأكيدْ" },
+        type: "POST",
+        //success: function (response) {},
+
+        //error: function (error) {
+        // console.log(error);
+        // },
+      });}
         
         }); 
   
   /////////////////////////////////////////////////////////////////////
+  
   //delete a course
   
   document.getElementById("registration_table").addEventListener("click", function(evt) {
@@ -373,78 +380,40 @@
     var s_id=cells[2].textContent;
     console.log(cells[4].textContent);
     console.log(course_id);
-    if (confirm("هل انت متأكد؟")) {
-      
-   // var sec_time = cells[2].textContent;
-  
-    $.ajax({
-      url: "{{ url_for('delete_ajax') }}",
-      data: {'cl' : course_id , 'sl' : s_id , 'std_id' : std_id},
-      type: 'POST',
-  
-  
-      success: function(response) {
-       document.getElementsByClassName("close")[0].click();
-       document.getElementById('myInput1').value="";
-       myFunction1();
-  
-     
-          var trHTML = '';
-          $('#registration_body').html(trHTML);
-  
-            for (var i = 0; i < response[1].length; ++i){
-              trHTML +=
-              '<tr><td>'
-              +' <button class="w" style="width:100%"><i class="fa fa-download"></i></button>'
-              + '</td><td>'
-              + (response[1][i]).time
-              + '</td><td>'
-              + (response[1][i]).s_id
-              + '</td><td>'
-              + (response[1][i]).nh
-              + '</td><td>'
-              + (response[1][i]).cn
-              + '</td ><td>'
-              + (response[1][i]).c_id
-              + '</td></tr>';
-  
-            //i++;
-         // });
-              }
-            $('#registration_body').append(trHTML);
-            document.getElementById('reg').style.display='block';
-  // }
-  
-  //نهاية الif 
-       
-       //console.log(response[0]);
-       //console.log(response[1]);
-  
-  
-       document.getElementById("t1").value=response;
-       document.getElementById("divv").style.display="block";
-  
-      },
-      
-      error: function(error) {
-      console.log(error);
-      }
-      });
-      }///////
-    
-    
-    
-    } else {
-      txt = "You pressed Cancel!";
     }
-  
-    
+    //delete above }
+    //add ajax here
+    if(okhelp === true){
+    $.ajax({
+      url: "{{ url_for('speak_ajax') }}",
+      data: { name: "لِتَأكيدِ حَذْفْ المَساقْ قُلْ: تَأكيدْ " },
+      type: "POST",
+      //success: function (response) {},
+
+      //error: function (error) {
+      // console.log(error);
+      // },
+    });}
     
     }); 
   
   
   
-  
+   // document
+   // .getElementById("viewTable")
+   // .addEventListener("click", function (evt) {
+    //  $.ajax({
+      //  url: "{{ url_for('process_ajax') }}",
+       // data: { name: "مرحباأناإسميفاطمة" },
+      //  type: "POST",
+        //success: function (response) {},
+
+        //error: function (error) {
+        // console.log(error);
+        // },
+     // });
+      ///////
+    //});
   
          
   //function fun(c){
@@ -492,7 +461,7 @@
     + '</td ><td>'
     + (response[i]).s_id
     + '</td><td>' 
-    +' <button class="h"style="width:100%"><i class="fa fa-download"></i></button>'
+    +' <button class="h"style="width:100% "><i class="h fa fa-download"></i></button>'
     + '</td></tr>';
     
     
@@ -507,6 +476,20 @@
   console.log(error);
   }
   });
+
+  if(okhelp === true){
+  $.ajax({
+    url: "{{ url_for('speak_ajax') }}",
+    data: {
+       name: "لاختيارِ شعبةٍ معينةٍ قُل: اختيار شُعْبَة متبوعاً برقمِ الشعبةِ التي تريدها" 
+      },
+    type: "POST",
+    //success: function (response) {},ْ
+
+    //error: function (error) {
+    // console.log(error);
+    // },
+  });}
   }///////
   
   }); 
@@ -518,7 +501,232 @@
   ///////////////////////////////
   //////////////////////////////
   var flag="";
+
+
+  document.getElementById("ok").addEventListener("click", function(evt){
+
+    var std_id = document.getElementById("id015").value;
+        
+    //var s_id=cells[4].textContent;
+    $.ajax({
+      url: "{{ url_for('registration_ajax') }}",
+      data: {'cl' : course_id , 'sl' : s_id , 'std_id' : std_id},
+      type: 'POST',
+      success: function(response) {
+       document.getElementsByClassName("close")[0].click();
+       document.getElementById('myInput1').value="";
+       myFunction1();
+       //بطفي الديفيجن تاع الشعب و بفضي التيكست تاع البحث و برجع الجدول كامل في كل الممواد
+
+      
+
+          var trHTML = '';
+          //جدول المواد المسجلة للطالب ب صفحة التسجيل
+          $('#registration_body').html(trHTML);
+          //console.log((response[1][1]).time)
+          
+          
+         // $.each(response[1], function (i) {
+            //console.log((response[1][i]))
+            // بطبع الداتا 
+            for (var i = 0; i < response[1].length; ++i){
+              trHTML +=
+              '<tr><td>'
+              +' <button class="w"style="width:100%"><i class="fa fa-download"></i></button>'
+              + '</td><td>'
+              + (response[1][i]).time
+              + '</td><td>'
+              + (response[1][i]).s_id
+              + '</td><td>'
+              + (response[1][i]).nh
+              + '</td><td>'
+              + (response[1][i]).cn
+              + '</td ><td>'
+              + (response[1][i]).c_id
+              + '</td></tr>';
+
+              }
+            $('#registration_body').append(trHTML);
+            document.getElementById('reg').style.display='block';
+
+
+
+            //ببين فيه شو الرسالة اللي وصلت من الاجاكس اللي بيجي فوق
+       document.getElementById("t1").value=response[0];
+       document.getElementById("divv").style.display="block";
+       if (response[0] === "انت بالفعل ملتحق بشعبة من هذا المساق يجب عليك حذف المساق ثم اعادة الالتحاق بشعبة اخرى"){
+       res = "انت بالفعل مسجل في هذا المساق";
+       $.ajax({
+        url: "{{ url_for('speak_ajax') }}",
+        
+        data: {name: "ْأنْتَ بالفعلِ مُسَجِّلٌ في هذا المَساق: إذا أرَدْتَ حَذفَ مَساقٍ مُعَينٍ قُلْ إحْذِفْ مَتْبوعاً بِإسمِ المَساقْ" },
+        type: "POST",
+        success: function (response) {},
+    
+        error: function (error) {
+        console.log(error);
+        },
+      });
+    }
+
+    if (response[0] ===  "اكتملت العملية بنجاح" ){
+      $.ajax({
+       url: "{{ url_for('speak_ajax') }}",
+       
+       data: {name:"تَمَّتْ العمليةُ بنجاحْ" },
+       type: "POST",
+       success: function (response) {},
+   
+       error: function (error) {
+       console.log(error);
+       },
+     });
+   }
+
+
+   if (response[0] ===  "انت لا تستطيع تسجيل اكثر من 20 ساعة...تتهورش"){
+    $.ajax({
+     url: "{{ url_for('speak_ajax') }}",
+     
+     data: {name: "ْأنتَ لا تَسْتَطيعْ تسجيلْ أَكثرْ  منْ عِشرينَ ساعةٍ:تِتْهَوَْرِشْ: إذا أرَدْتَ حَذفَ مَساقٍ مُعَينٍ قُلْ إحْذِفْ مَتْبوعاً بِإسمِ المَساقْ" },
+     type: "POST",
+     success: function (response) {},
+ 
+     error: function (error) {
+     console.log(error);
+     },
+   });
+ }
+
+ if (response[0] ===  "السجل المالي غير كافي" ){
+  $.ajax({
+   url: "{{ url_for('speak_ajax') }}",
+   
+   data: {name: "رَّصيدكَ الحاليّ غيرُ كافٍ" },
+   type: "POST",
+   success: function (response) {},
+
+   error: function (error) {
+   console.log(error);
+   },
+ });
+}
+
+if (response[0] === "هذا المساق يتعارض مع مساق اخر في نفس الوقت" ){
+  $.ajax({
+   url: "{{ url_for('speak_ajax') }}",
+   
+   data: {name: "هَذا المَساقُ  يَتَعْارَضُ مَعْ  مَساقٍ آخَرْ: إذا أرَدْتَ حَذفَ مَساقٍ مُعَينٍ قُلْ إحْذِفْ مَتْبوعاً بِإسمِ المَساقْ" },
+   type: "POST",
+   success: function (response) {},
+
+   error: function (error) {
+   console.log(error);
+   },
+ });
+}
+
+
+
+
+       console.log(res)
+            
+      },
+    
+      error: function(error) {
+      console.log(error);
+      }
+
+
+
+      });
+
+    }
+  );
+    
+
+
+// عملية حذف المادة بعد ما يكبس عال اوك 
+  document.getElementById("okdel").addEventListener("click", function(evt){
+
+    var std_id = document.getElementById("id015").value;
+
+        
+    //var s_id=cells[4].textContent;
+    $.ajax({
+      url: "{{ url_for('delete_ajax') }}",
+      data: {'cl' : course_id , 'sl' : s_id , 'std_id' : std_id},
+      type: 'POST',
   
+  
+      success: function(response) {
+       //document.getElementsByClassName("close")[0].click();
+       //document.getElementById('myInput1').value="";
+       //myFunction1();
+  
+     
+          var trHTML = '';
+          $('#registration_body').html(trHTML);
+  
+            for (var i = 0; i < response[1].length; ++i){
+              trHTML +=
+              '<tr><td>'
+              +' <button class="w" style="width:100%"><i class="fa fa-download"></i></button>'
+              + '</td><td>'
+              + (response[1][i]).time
+              + '</td><td>'
+              + (response[1][i]).s_id
+              + '</td><td>'
+              + (response[1][i]).nh
+              + '</td><td>'
+              + (response[1][i]).cn
+              + '</td ><td>'
+              + (response[1][i]).c_id
+              + '</td></tr>';
+  
+              }
+            $('#registration_body').append(trHTML);
+            document.getElementById('reg').style.display='block';
+ 
+  
+  
+       document.getElementById("t1").value=response[0];
+       document.getElementById("divv").style.display="block";
+
+
+       if (response[0] ===  "اكتملت العملية بنجاح" ){
+        $.ajax({
+         url: "{{ url_for('speak_ajax') }}",
+         
+         data: {name:"تَمَّتْ العمليةُ بنجاحْ" },
+         type: "POST",
+         success: function (response) {},
+     
+         error: function (error) {
+         console.log(error);
+         },
+       });
+     }
+
+  
+      },
+      
+      error: function(error) {
+      console.log(error);
+      }
+      });
+    
+    }
+  );
+    
+     ///////
+    
+     function darkfun() {
+      var element = document.body;
+      element.classList.toggle("dark-mode");
+   }
+    
+  okhelp = false;
   
   if(annyang) {
       var commands = {
@@ -526,8 +734,26 @@
          document.getElementsByTagName("a")[1].click();
          
        },
-       'الصفحه الرئيسيه':function(){     
-        document.getElementsByTagName("a")[2].click();
+
+       'الوضع الليلي':function(){     
+        darkfun()
+        
+      },
+
+
+       'الغاء الوضع الليلي':function(){     
+         
+        darkfun()
+       },
+
+
+       'مساعده':function(){     
+        okhelp = true;
+        
+      },
+
+       'الغاء المساعده':function(){     
+        okhelp = false;
          
        },
       
@@ -544,7 +770,7 @@
         myFunction();
         },
   
-        'شعب المساق *tag':function(variable){
+        'ماده*tag':function(variable){
           
           document.getElementById('myInput1').value=variable;
           //id.value=variable;
@@ -561,19 +787,30 @@
               variable= variable2;
               }
              else{
+               //اذا المستخدم حكى شعبة مش رقم
               variable= variable;
             }
            
-            ff(variable);
-          
+            addsection(variable);
+            
     
           },
-          'حذف *tag':function(variable){
-            ff2(variable);
+          'احذف *tag':function(variable){
+            deletesection(variable);
           
           },
-  
-  
+
+          'تاكيد':function(){
+
+            if (document.getElementById('id03').style.display == 'block')
+               document.getElementById('ok').click();
+            else
+            document.getElementById('okdel').click();
+            
+
+          },
+
+         
         'اسم المساق *tag':function(variable){
         let id=document.getElementById('myInput1');
         id.value=variable;
@@ -611,6 +848,14 @@
        },
       }
      };
+
+     //SpeechKITT.annyang();
+ 
+     // Define a stylesheet for KITT to use
+     //SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css');
+    
+     // Render KITT's interface
+     //SpeechKITT.vroom();
      annyang.setLanguage('ar-PA');
      // Add our commands to annyang
      annyang.addCommands(commands);

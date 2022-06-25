@@ -15,6 +15,7 @@
 
     
         <body>
+         
             <section class="headerinfo">
                 <nav>
                     <!-- <a href="index.html"><img src="images/Logo.jpg"></a> -->
@@ -23,12 +24,12 @@
                           <li>
                             <form  action="{{ url_for('afterlogin') }}" method="POST">
                               <input style="display: none" type="text" name="number" value="{{v2}}" id="number" >
-                              <button type="submit" class="gh">رجوع</button><i class="fa fa-backward"></i>
+                              <button type="submit" class="gh">رجوع</button><i class="jk fa fa-backward"></i>
                               </form></li>
         
-                            <li><a href="{{ url_for('login') }}">تسجيل الخروج</a><i class="fa fa-sign-out" ></i></li>
+                            <li><a href="{{ url_for('login') }}">تسجيل الخروج</a><i class="jk fa fa-sign-out"></i></li>
                            
-                            <li><a href="{{ url_for('home') }}">الصفحة الرئيسية</a><i class="fa fa-home" ></i></li>
+                            <li><a href="{{ url_for('home') }}">الصفحة الرئيسية</a><i class="jk fa fa-home"></i></li>
                         </ul>
                     </div>
         
@@ -38,7 +39,7 @@
                     <div class="sidebar1">
                         <br><br>
                
-              <h1 class="h1">تعديل معلومات الطالب</h1>
+            
              
               <br>
               <center>
@@ -73,13 +74,14 @@
             </tr>
         </table>
         <button onclick="yes()" value="تأكيد" id="y"class="yes">تأكيد</button>
-        <button onclick="NO()" value="تراجع" id="N"class="NO">تراجع</button>        
+        <button onclick="NO()" value="الغاء" id="N"class="NO">الغاء</button>        
         </div>
               </div>
                         </div>
                     </center>
                 </center>
     
+    </div>
                       </body>
                       
    <script>
@@ -157,7 +159,7 @@
             console.log(cc1);
             document.getElementsByClassName("inputt")[1].value=cc1; 
            },
-           'تراجع':function(){     
+           'الغاء':function(){     
             document.getElementsByClassName("NO")[0].click();       
            },
            'تاكيد':function(){     

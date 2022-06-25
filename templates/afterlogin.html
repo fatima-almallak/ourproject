@@ -26,9 +26,13 @@
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                    <br><br>
                    {% for row in value %} 
-                    <a href="#">اسم الطالب: {{row[1]}} {{row[2]}}</a>
-                    <a href="#">الرقم الجامعي :{{row[0]}}</a>
-                    <a href="#">التخصص :{{row[7]}}</a>
+                    <a href="#">اسم الطالب: {{row[1]}} {{row[2]}}</a><br>
+                    <a href="#">الرقم الجامعي :{{row[0]}}</a><br>
+                     <a href="#">التخصص :{{row[7]}}</a><br>
+                    <a href="#">الكلية : الهندسة والتكنولوجيا</a><br>
+      
+                    <!-- <a href="#">الايميل :{{row[7]}}</a>
+                     <a href="#">رقم الجوال :{{row[7]}}</a> -->
                     
                   </div>
                   
@@ -68,6 +72,8 @@
                   <input style="display: none" type="text" name="y" value="{{row[0]}}" id="y" >
                   <button type="submit"class="bbb2"> <i class="fa fa-pencil"></i>
                   <br><br><br>
+
+              
                   <h5>تعديل بيانات الطالب</h5></button>
                 </form></div>
               
@@ -97,6 +103,9 @@
                       <h5>تعديل كلمة السر</h5> </button>
                     </form></div>
 
+
+               
+
                          
         </div>
     </div>
@@ -104,7 +113,14 @@
 </nav>
 </section>
 
-    
+<div>
+  <form action="{{ url_for('ereg') }}" method="POST">
+    <input style="display: none" type="text" name="x" value="{{row[0]}}" id="x" >
+    <button type="submit"class="bbb5"><i class="fa fa-key"></i>
+    <br><br><br>
+    <h5>التسجيل الالي</h5> </button>
+  </form>
+
 </body>
   <script>
      var navLinks= document.getElementById("navLinks");
